@@ -1,9 +1,8 @@
-#include<iostream>
-#include<vector>
-
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <chrono>
+#include <thread>
 
 int main(){
-    
     return 0;
 }
