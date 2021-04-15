@@ -1,21 +1,21 @@
 #include<iostream>
+#include<vector>
 #include"position.hpp"
-#include"movements.hpp"
 
 class puzzle{
     private:
-        int board[3][3] = {{7,2,4},{5,0,6},{8,3,1}};
+        std::vector<std::vector<int>> board = {{7,2,4},{5,0,6},{8,3,1}};
         position curPosition;
-    private:
-        void toggle(MOVEMENTS);
     public:
         puzzle();
-        puzzle(position);
-        puzzle(bool);
-        ~puzzle(){}
-        void move(MOVEMENTS);
+        ~puzzle();
+        puzzle createMove(int, int);
         void printBoard();
-        int** getBoard();
+        bool isSolved();
+        void changeBoard(std::vector<std::vector<int>>);
+        std::vector<std::vector<int>> getBoard();
+        std::vector<puzzle> move();
+        void toggle(int, int);
 };
 
 puzzle::puzzle(){
@@ -23,62 +23,25 @@ puzzle::puzzle(){
     this->curPosition.y = 1;
 }
 
-puzzle::puzzle(position p){
-    this->curPosition.x = p.x;
-    this->curPosition.y = p.y;
+puzzle::~puzzle(){
 }
 
-puzzle::puzzle(bool b){
-    this->curPosition.x = 0;
-    this->curPosition.y = 0;
-    if(b){
-        int c = 0;
-        for(int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
-                this->board[j][i] = c;
-                c++;
+puzzle puzzle::createMove(int x, int y){
+    puzzle *p = new puzzle();
+    p->changeBoard(this->board);
+    p->toggle(x,y);
+    return *p;
+}
+
+void puzzle::changeBoard(std::vector<std::vector<int>> b){
+    for(int i = 0; i < 2; i++){
+        for(int j = 0; j < 2; j++){
+            this->board[j][i] = b[j][i];
+            if(b[j][i] == 0){
+                this->curPosition.x = j;
+                this->curPosition.y = i;
             }
         }
-    }
-}
-
-void puzzle::toggle(MOVEMENTS m){
-    switch(m){
-        case MOVEMENTS::LEFT:
-            board[this->curPosition.x][this->curPosition.y] = board[this->curPosition.x + 1][this->curPosition.y];
-            board[this->curPosition.x + 1][this->curPosition.y] = 0;
-            this->curPosition.x++;
-        break;
-        case MOVEMENTS::RIGHT:
-            board[this->curPosition.x][this->curPosition.y] = board[this->curPosition.x - 1][this->curPosition.y];
-            board[this->curPosition.x - 1][this->curPosition.y] = 0;
-            this->curPosition.x--;
-        break;
-        case MOVEMENTS::UP:
-            board[this->curPosition.x][this->curPosition.y] = board[this->curPosition.x][this->curPosition.y + 1];
-            board[this->curPosition.x][this->curPosition.y + 1] = 0;
-            this->curPosition.y++;
-        break;
-        case MOVEMENTS::DOWN:
-            board[this->curPosition.x][this->curPosition.y] = board[this->curPosition.x][this->curPosition.y - 1];
-            board[this->curPosition.x][this->curPosition.y - 1] = 0;
-            this->curPosition.y--;
-        break;
-    }
-}
-
-void puzzle::move(MOVEMENTS m){
-    if((m == MOVEMENTS::LEFT) && this->curPosition.x > 0){
-        this->toggle(m);
-    }
-    else if((m == MOVEMENTS::RIGHT) && this->curPosition.x < 2){
-        this->toggle(m);
-    }
-    else if((m == MOVEMENTS::UP) && this->curPosition.y > 0){
-        this->toggle(m);
-    }
-    else if((m == MOVEMENTS::DOWN) && this->curPosition.y < 2){
-        this->toggle(m);
     }
 }
 
@@ -89,14 +52,36 @@ void puzzle::printBoard(){
         std::cout << "\n";
 }
 
-int **puzzle::getBoard(){
-    int** copy = 0;
-    copy = new int*[3];
+std::vector<std::vector<int>> puzzle::getBoard(){
+    return board;
+}
+
+bool puzzle::isSolved(){
+    int counter = 0;
     for(int i = 0; i < 3; i++){
-        copy[i] = new int[3];
         for(int j = 0; j < 3; j++){
-            copy[j][i] = this->board[j][i];
+            if(this->board[j][i] != counter++)
+                return false;
         }
     }
-    return copy;
+    return true;
+}
+
+std::vector<puzzle> puzzle::move(){
+    int movements[2][4] = {{1,-1,0,0},{0,0,1,-1}};
+    std::vector<puzzle> p;
+
+    for(int j = 0; j < 4; j++){
+        if((this->curPosition.x + movements[0][j] >= 0 && this->curPosition.x + movements[0][j] <= 2) && (this->curPosition.y + movements[1][j] >= 0 && this->curPosition.y + movements[1][j] <= 2)){
+            p.push_back(this->createMove(movements[0][j],movements[1][j]));
+        }
+    }
+    return p;
+}
+
+void puzzle::toggle(int x, int y){
+    this->board[this->curPosition.x][this->curPosition.y] = this->board[this->curPosition.x + x][this->curPosition.y + y];
+    this->board[this->curPosition.x + x][this->curPosition.y + y] = 0;
+    this->curPosition.x = this->curPosition.x + x;
+    this->curPosition.y = this->curPosition.y + y;
 }

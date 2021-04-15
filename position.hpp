@@ -5,9 +5,9 @@ struct position{
     int y;
 };
 
-position difference(position a, position b){
-    position p;
-    p.x = abs(a.x - b.x);
-    p.y = abs(a.y - b.y);
-    return p;
+int difference(position a, position b){
+    int steps = 0;
+    steps += abs(a.x - b.x);
+    steps += abs(a.y - b.y);
+    return steps;
 }
