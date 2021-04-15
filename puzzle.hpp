@@ -1,11 +1,10 @@
 #include<iostream>
-#include<vector>
 #include"position.hpp"
 #include"movements.hpp"
 
 class puzzle{
     private:
-        unsigned int board[3][3] = {{7,2,4},{5,0,6},{8,3,1}};
+        int** board = 0;
         position curPosition;
     private:
         void toggle(MOVEMENTS);
@@ -15,10 +14,18 @@ class puzzle{
         ~puzzle(){}
         void move(MOVEMENTS);
         void printBoard();
-        unsigned int getBoard();
+        int** getBoard();
 };
 
 puzzle::puzzle(){
+    this->board = new int*[3];
+    for(int h = 0; h < 3; h++){
+        this->board[h] = new int[3];
+        for(int w = 0; w < 3; w++){
+            this->board[w][h] = 0;
+        }
+    }
+    this->board[]
     this->curPosition.x = 1;
     this->curPosition.y = 1;
 }
@@ -75,3 +82,6 @@ void puzzle::printBoard(){
         std::cout << "\n";
 }
 
+int** puzzle::getBoard(){
+    return board;
+}
