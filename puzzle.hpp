@@ -4,13 +4,14 @@
 
 class puzzle{
     private:
-        int** board = 0;
+        int board[3][3] = {{7,2,4},{5,0,6},{8,3,1}};
         position curPosition;
     private:
         void toggle(MOVEMENTS);
     public:
         puzzle();
         puzzle(position);
+        puzzle(bool);
         ~puzzle(){}
         void move(MOVEMENTS);
         void printBoard();
@@ -18,14 +19,6 @@ class puzzle{
 };
 
 puzzle::puzzle(){
-    this->board = new int*[3];
-    for(int h = 0; h < 3; h++){
-        this->board[h] = new int[3];
-        for(int w = 0; w < 3; w++){
-            this->board[w][h] = 0;
-        }
-    }
-    this->board[]
     this->curPosition.x = 1;
     this->curPosition.y = 1;
 }
@@ -33,6 +26,20 @@ puzzle::puzzle(){
 puzzle::puzzle(position p){
     this->curPosition.x = p.x;
     this->curPosition.y = p.y;
+}
+
+puzzle::puzzle(bool b){
+    this->curPosition.x = 0;
+    this->curPosition.y = 0;
+    if(b){
+        int c = 0;
+        for(int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+                this->board[j][i] = c;
+                c++;
+            }
+        }
+    }
 }
 
 void puzzle::toggle(MOVEMENTS m){
@@ -82,6 +89,14 @@ void puzzle::printBoard(){
         std::cout << "\n";
 }
 
-int** puzzle::getBoard(){
-    return board;
+int **puzzle::getBoard(){
+    int** copy = 0;
+    copy = new int*[3];
+    for(int i = 0; i < 3; i++){
+        copy[i] = new int[3];
+        for(int j = 0; j < 3; j++){
+            copy[j][i] = this->board[j][i];
+        }
+    }
+    return copy;
 }
