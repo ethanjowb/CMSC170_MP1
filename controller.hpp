@@ -23,7 +23,7 @@ std::vector<pnode> controller::solve(){
     store.push_back(initial);
     while(store.size() != 0){
         std::sort(store.begin(),store.end(),compare);
-        pnode p = store[store.begin()];
+        pnode p = store.at(store.begin());
         store.pop_back();
         puzzle puz = p.getPuzzle();
         std::vector<puzzle> pz = puz.move();
