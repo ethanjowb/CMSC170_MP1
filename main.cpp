@@ -6,10 +6,5 @@
 #include"puzzle.hpp"
 
 int main(){
-    controller c;
-    std::vector<pnode> ans = c.solve();
-    
-
-    
     return 0;
 }
