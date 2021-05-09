@@ -130,6 +130,7 @@ void Node::printNode(){
     this->printBoard();
     cout << "CHILDREN: ";
     for(int i = 0; i < this->children.size(); i++){
+        cout << "CHILD VALUE: " << this->children[i].value;
         this->children[i].printBoard();
         cout << "---";
     }
