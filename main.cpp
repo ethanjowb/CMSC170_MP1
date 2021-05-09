@@ -2,7 +2,6 @@
 #include<vector>
 #include<bits/stdc++.h>
 #include"board.hpp"
-#include"position.hpp"
 
 using namespace std;
 
@@ -25,9 +24,14 @@ int main(){
 
     Board sample1(sample.board);
 
-    
+    axis p,q;
+    p.x = 0;
+    p.y = 0;
+    q.x = 1;
+    q.y = 1;
 
-    
+    sample1.toSwap(p,q);
+    sample1.printBoard();
 
     return 0;
 }
