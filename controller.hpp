@@ -52,7 +52,7 @@ void Controller::swap(int from, int to){
 void Controller::solve(Node prob){
     placeholder.push_back(prob);
     while(true && placeholder.size() > 0){
-        // cout << "PLACEHOLDER SIZE: " << placeholder.size() << "\n";
+        cout << "PLACEHOLDER SIZE: " << placeholder.size() << "\n";
         cout << "BEFORE SORT: \n";
         for(int i = 0; i < placeholder.size(); i++){
             cout << placeholder[i].value << " ";
@@ -63,29 +63,29 @@ void Controller::solve(Node prob){
             cout << placeholder[i].value << " ";
         }
         cout << "\n";
-        // cout << "SORT FINISHED\n";
+        cout << "SORT FINISHED\n";
         Node p(&placeholder[placeholder.size() - 1]);
-        // cout << "P BOARD: ";
-        // p.printBoard();
-        // cout << "HELLO?\n";
-        // p.printBoard();
+        cout << "P BOARD: ";
+        p.printBoard();
+        cout << "HELLO?\n";
+        p.printBoard();
         placeholder.pop_back();
-        // cout << "SHIT?\n";
+        cout << "SHIT?\n";
         
         if(p.isSolved()){
-            // cout << "FOUND THE SOLUTION\n";
+            cout << "FOUND THE SOLUTION\n";
             this->goal = &p;
         }
         else{
-            // cout << "SHIT?\n";
+            cout << "SHIT?\n";
             p.create(&p);
             p.printNode();
-            // cout << "CREATED THE CHILDREN\n";
+            cout << "CREATED THE CHILDREN\n";
             for(int i = 0; i < p.children.size(); i++){
                 placeholder.push_back(p.children[i]);
             }
         }
-        // cout << "IS IT DONE?\n";
+        cout << "IS IT DONE?\n";
     }
 }
 
