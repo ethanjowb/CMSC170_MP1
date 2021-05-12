@@ -41,9 +41,9 @@ void custom(){
     Controller c;
 
     c.solve(n);
-    cout << "FINISHED:\n";
-    c.goal->printBoard();
-    c.goal->parent->printBoard();
+    // cout << "FINISHED:\n";
+    // c.goal->printBoard();
+    // c.goal->parent->printBoard();
     c.printSolution();
 }
 

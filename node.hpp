@@ -61,6 +61,11 @@ Node::Node(Node *p, Board other){
     this->b = Board(other.board);
     this->height = p->height + 1;
     this->seen = false;
+    // if(this->parent != NULL){
+    //     cout << "PARENT INITIALIZES: \n";
+    //     this->parent->printBoard();
+    //     cout << "DONE\n";
+    // }
     this->manhattanValue();
 }
 
@@ -139,6 +144,11 @@ void Node::printNode(){
     cout << "VALUE: " << this->value << "\n";
     cout << "BOARD: ";
     this->printBoard();
+    if(this->parent != NULL){
+        cout << "PARENT: ";
+        this->parent->printBoard();
+        cout << "\n";
+    }
     cout << "CHILDREN: ";
     for(int i = 0; i < this->children.size(); i++){
         cout << "\nCHILD VALUE: " << this->children[i].value;

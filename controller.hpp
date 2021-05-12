@@ -73,12 +73,13 @@ void Controller::solve(Node prob){
             }
         }
 
-        p.printBoard();
-        cout << "CURRENT HEIGHT: " << p.height << "\n";
-        cout << "CURRENT VALUE: " << p.value << "\n";
+        // p.printBoard();
+        // cout << "CURRENT HEIGHT: " << p.height << "\n";
+        // cout << "CURRENT VALUE: " << p.value << "\n";
 
         if(p.isSolved()){
-            this->goal = &p;
+            Node *g = new Node(&p);
+            this->goal = g;
             break;
         }
 
@@ -90,15 +91,24 @@ void Controller::solve(Node prob){
                 placeholder.push_back(p.children[i]);
             }
         }
+
+        p.printNode();
     }
 }
 
 void Controller::printSolution(){
+    cout << "running\n";
     vector<Node> trace;
     Node *temp = this->goal;
+    cout << "CURRENT TEMP: ";
+    temp->printBoard();
     trace.push_back(*temp);
+
     while(temp->parent != NULL){
+        cout << "HAS TEMP PARENT\n";
+        temp->parent->printBoard();
         temp = temp->parent;
+        temp->printBoard();
         trace.push_back(*temp);
     }
 
