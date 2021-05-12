@@ -64,11 +64,11 @@ void Controller::solve(Node prob){
         //     cout << placeholder[i].value << " ";
         // }
 
-        Node p(&placeholder[placeholder.size() - 1]);
+        Node *p = new Node(&placeholder[placeholder.size() - 1]);
         placeholder.pop_back();
 
         for(int j = 0; j < uniqueBoards.size(); j++){
-            if(p.b.compare(uniqueBoards[j])){
+            if(p->b.compare(uniqueBoards[j])){
                 isUnique = false;
             }
         }
@@ -77,38 +77,36 @@ void Controller::solve(Node prob){
         // cout << "CURRENT HEIGHT: " << p.height << "\n";
         // cout << "CURRENT VALUE: " << p.value << "\n";
 
-        if(p.isSolved()){
-            Node *g = new Node(&p);
-            this->goal = g;
+        if(p->isSolved()){
+            this->goal = p;
             break;
         }
 
-        if((p.children.size() == 0) && isUnique){
-            p.hasSeen();
-            uniqueBoards.push_back(p.b);
-            p.create(&p);
-            for(int i = 0; i < p.children.size(); i++){
-                placeholder.push_back(p.children[i]);
+        if((p->children.size() == 0) && isUnique){
+            uniqueBoards.push_back(p->b);
+            p->create(p);
+            for(int i = 0; i < p->children.size(); i++){
+                placeholder.push_back(p->children[i]);
             }
         }
 
-        p.printNode();
+        // p->printNode();
     }
 }
 
 void Controller::printSolution(){
-    cout << "running\n";
+    // cout << "running\n";
     vector<Node> trace;
     Node *temp = this->goal;
-    cout << "CURRENT TEMP: ";
-    temp->printBoard();
+    // cout << "CURRENT TEMP: ";
+    // temp->printBoard();
     trace.push_back(*temp);
 
     while(temp->parent != NULL){
-        cout << "HAS TEMP PARENT\n";
-        temp->parent->printBoard();
+        // cout << "HAS TEMP PARENT\n";
+        // temp->parent->printBoard();
         temp = temp->parent;
-        temp->printBoard();
+        // temp->printBoard();
         trace.push_back(*temp);
     }
 
