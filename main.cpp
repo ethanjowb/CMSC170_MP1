@@ -2,7 +2,8 @@
 
 using namespace std;
 
-void printVector(vector<int>);
+// void swap(vector<int>*, int, int);
+// void printVector(vector<int>);
 
 int main(){
 
@@ -29,50 +30,58 @@ int main(){
     return 0;
 } 
 
-    // vector<int> a;
-    // vector<int> b;
-    // vector<int> c;
+// void swap(vector<int> *value, int from, int to){
+//     int fromNode = (*value)[from];
+//     int toNode = (*value)[to];
+//     (*value).erase((*value).begin() + from);
+//     (*value).insert((*value).begin() + from, toNode);
+//     (*value).erase((*value).begin() + to);
+//     (*value).insert((*value).begin() + to, fromNode);
+// }
 
-    // for(int i = 0; i < 9; i++){
-    //     if(i < 3)
-    //         a.push_back(i);
-    //     else if(i >= 3 && i < 6)
-    //         b.push_back(i);
-    //     else
-    //         c.push_back(i);
+
+// void printVector(vector<int> value){
+//     for(int i = 0; i < value.size(); i++){
+//         cout << value[i] << " ";
+//     }
+//     cout << "\n";
+// }
+
+
+    // vector<int> a;
+
+    // while(true){
+    //     int b;
+    //     cin >> b;
+    //     if(b != 0){
+    //         a.push_back(b);
+    //     }
+    //     else{
+    //         break;
+    //     }
     // }
 
-    // // // swapping stuff
-    // // int from = 0;
-    // // int to = 2;
-    // // int temp = a[from];
-    // // int temp1 = a[to];
-    // // a.erase(a.begin() + from);
-    // // a.insert(a.begin() + from, temp1);
-    // // a.erase(a.begin() + to);
-    // // a.insert(a.begin() + to, temp);
-    // // for(int i = 0; i < 3; i++){
-    // //     cout << a[i] << " ";
-    // // }
+    // bool changed = false;
+    // while(true){
+    //     int smol = a[0];
+    //     for(int j = 0; j < a.size(); j++){
+    //         if(smol < a[j]){
+    //             swap(&a, j-1, j);
+    //             cout << "SMOL: " << smol << "\n";
+    //             changed = true;
+    //         }
+    //         else{
+    //             smol = a[j];
+    //         }
+    //         printVector(a);
+    //     }
+    //     if(changed){
+    //         changed = false;
+    //         smol = a[0];
+    //     }
+    //     else{
+    //         break;
+    //     }
+    // }
 
-    // cout << "Size: " << a.size() << "\n";
-    // Board sample(a,b,c);
-    // // sample.printBoard();
-
-    // Board sample1(sample.board);
-
-    // axis p,q;
-    // p.x = 0;
-    // p.y = 0;
-    // q.x = 1;
-    // q.y = 1;
-
-    // sample1.toSwap(p,q);
-    // // sample1.printBoard();
-
-    // Node n(sample1);
-    // n.create(&n);
-    // n.printNode();
-
-    // Node m(&n);
-    // m.printNode();
+    // // printVector(a);

@@ -21,6 +21,7 @@ class Board{
     public:
         void printBoard();
         void toSwap(axis, axis);
+        bool compare(Board);
         axis findEmpty();
         bool isSolved();
 };
@@ -104,6 +105,17 @@ bool Board::isSolved(){
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             if(this->board[i][j] != goal.board[i][j]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+bool Board::compare(Board other){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(this->board[j][i] != other.board[j][i]){
                 return false;
             }
         }

@@ -3,6 +3,7 @@
 class Controller{
     public:
         vector<Node> placeholder;
+        vector<Board> uniqueBoards;
         Node *goal;
 
     public:
@@ -21,13 +22,16 @@ Controller::Controller(){
 }
 
 void Controller::sort(){
-    int smol = placeholder[0].value;
     bool changed = false;
     while(true){
+        int smol = placeholder[0].value;
         for(int j = 0; j < placeholder.size(); j++){
             if(smol < placeholder[j].value){
                 this->swap(j-1, j);
                 changed = true;
+            }
+            else{
+                smol = placeholder[j].value;
             }
         }
         if(changed){
@@ -52,45 +56,44 @@ void Controller::swap(int from, int to){
 void Controller::solve(Node prob){
     placeholder.push_back(prob);
     while(true && placeholder.size() > 0){
-        cout << "PLACEHOLDER SIZE: " << placeholder.size() << "\n";
-        cout << "BEFORE SORT: \n";
-        for(int i = 0; i < placeholder.size(); i++){
-            cout << placeholder[i].value << " ";
-        }
+        bool isUnique = true;
         this->sort();
-        cout << "\nAFTER SORT: \n";
-        for(int i = 0; i < placeholder.size(); i++){
-            cout << placeholder[i].value << " ";
-        }
-        cout << "\n";
-        cout << "SORT FINISHED\n";
+
+        // cout << "\nAFTER SORT: \n";
+        // for(int i = 0; i < placeholder.size(); i++){
+        //     cout << placeholder[i].value << " ";
+        // }
+
         Node p(&placeholder[placeholder.size() - 1]);
-        cout << "P BOARD: ";
-        p.printBoard();
-        cout << "HELLO?\n";
-        p.printBoard();
         placeholder.pop_back();
-        cout << "SHIT?\n";
-        
-        if(p.isSolved()){
-            cout << "FOUND THE SOLUTION\n";
-            this->goal = &p;
+
+        for(int j = 0; j < uniqueBoards.size(); j++){
+            if(p.b.compare(uniqueBoards[j])){
+                isUnique = false;
+            }
         }
-        else{
-            cout << "SHIT?\n";
+
+        p.printBoard();
+        cout << "CURRENT HEIGHT: " << p.height << "\n";
+        cout << "CURRENT VALUE: " << p.value << "\n";
+
+        if(p.isSolved()){
+            this->goal = &p;
+            break;
+        }
+
+        if((p.children.size() == 0) && isUnique){
+            p.hasSeen();
+            uniqueBoards.push_back(p.b);
             p.create(&p);
-            p.printNode();
-            cout << "CREATED THE CHILDREN\n";
             for(int i = 0; i < p.children.size(); i++){
                 placeholder.push_back(p.children[i]);
             }
         }
-        cout << "IS IT DONE?\n";
     }
 }
 
 void Controller::printSolution(){
-    cout << "tried running\n";
     vector<Node> trace;
     Node *temp = this->goal;
     trace.push_back(*temp);

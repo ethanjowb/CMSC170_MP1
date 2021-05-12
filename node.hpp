@@ -10,6 +10,7 @@ class Node{
         int height;
         int value;
         vector<Node> children;
+        bool seen;
     
     public:
         Node();
@@ -24,12 +25,14 @@ class Node{
         void printNode();
         void create(Node*);
         bool isSolved();
+        void hasSeen();
 };
 
 Node::Node(){
     this->parent = NULL;
     this->b = Board();
     this->height = 0;
+    this->seen = false;
     this->manhattanValue();
 }
 
@@ -38,6 +41,7 @@ Node::Node(Node *other){
     this->b = Board(other->b.board);
     this->height = other->height;
     this->value = other->value;
+    this->seen = false;
 
     for(int i = 0; i < other->children.size(); i++){
         this->children.push_back(other->children[i]);
@@ -48,6 +52,7 @@ Node::Node(Board other){
     this->b = Board(other.board);
     this->parent = NULL;
     this->height = 0;
+    this->seen = false;
     this->manhattanValue();
 }
 
@@ -55,6 +60,7 @@ Node::Node(Node *p, Board other){
     this->parent = p;
     this->b = Board(other.board);
     this->height = p->height + 1;
+    this->seen = false;
     this->manhattanValue();
 }
 
@@ -104,18 +110,23 @@ void Node::create(Node *n){
     int y_move[] = {1, 0,-1,0};
     for(int i = 0; i < 4; i++){
         axis toPosition;
-        if(((x_move[i] + zero.x) >= 0) || 
-           ((x_move[i] + zero.x) <= 2) ||
-           ((y_move[i] + zero.y) >= 0) ||
+        if(((x_move[i] + zero.x) >= 0) &&
+           ((x_move[i] + zero.x) <= 2) &&
+           ((y_move[i] + zero.y) >= 0) &&
            ((y_move[i] + zero.y) <= 2)){
+            //    cout << "CHILD CREATED\n";
                toPosition.x = x_move[i] + zero.x;
                toPosition.y = y_move[i] + zero.y;
                Board child(this->b.board);
+            //    cout << "GOING TO SWAP\n";
                child.toSwap(zero, toPosition);
+            //    cout << "GONNA CREATE NCHILD\n";
                Node nChild(n, child);
+            //    cout << "CREATED NODE CHILD\n";
                this->children.push_back(nChild);
            }
     }
+    // cout << "CHILDREN FINISHED\n";
 }
 
 void Node::printBoard(){
@@ -130,7 +141,7 @@ void Node::printNode(){
     this->printBoard();
     cout << "CHILDREN: ";
     for(int i = 0; i < this->children.size(); i++){
-        cout << "CHILD VALUE: " << this->children[i].value;
+        cout << "\nCHILD VALUE: " << this->children[i].value;
         this->children[i].printBoard();
         cout << "---";
     }
@@ -138,4 +149,8 @@ void Node::printNode(){
 
 bool Node::isSolved(){
     return this->b.isSolved();
+}
+
+void Node::hasSeen(){
+    this->seen = true;
 }
